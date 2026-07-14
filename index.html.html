@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>رحلة الآباء والأبناء — براغ · كراكوف · زاكوباني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EADC;
+    --paper-dim:#E7DFCC;
+    --ink:#20241F;
+    --forest:#1E3B34;
+    --forest-2:#0F2621;
+    --brass:#B8863B;
+    --brass-light:#D8AE6E;
+    --terracotta:#A8503A;
+    --terracotta-2:#7C3A29;
+    --mist:#5D7A82;
+    --mist-2:#3D565D;
+    --line:rgba(32,36,31,.14);
+    --shadow: 0 10px 30px rgba(15,38,33,.12);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Amiri',serif}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  /* ---------- top nav ---------- */
+  .topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(241,234,220,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav-inner{
+    max-width:760px;margin:0 auto;
+    display:flex;gap:8px;padding:10px 14px;
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .topnav-inner::-webkit-scrollbar{display:none}
+  .navpill{
+    flex:0 0 auto;
+    font-size:13px;font-weight:700;
+    padding:8px 16px;border-radius:100px;
+    border:1px solid var(--line);
+    background:transparent;color:var(--ink);
+    white-space:nowrap;cursor:pointer;
+    transition:.25s;
+  }
+  .navpill.active{background:var(--forest);color:var(--paper);border-color:var(--forest)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:54px 18px 40px;
+    background:linear-gradient(180deg,var(--forest-2) 0%,var(--forest) 60%,var(--mist-2) 100%);
+    color:var(--paper);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(216,174,110,.25), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(255,255,255,.08), transparent 35%);
+  }
+  .hero-content{position:relative;max-width:760px;margin:0 auto}
+  .eyebrow{
+    font-size:12px;letter-spacing:.08em;color:var(--brass-light);
+    display:flex;align-items:center;gap:8px;margin-bottom:14px;font-weight:700;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--brass-light)}
+  .hero h1{
+    font-size:clamp(32px,8vw,46px);
+    line-height:1.25;margin:0 0 10px;font-weight:700;
+  }
+  .hero p.sub{margin:0 0 26px;font-size:15px;color:#DDE6E1;line-height:1.9;max-width:52ch}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+  .stat{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:12px 16px;flex:1;min-width:110px;
+  }
+  .stat b{display:block;font-size:20px;font-family:'Amiri',serif}
+  .stat span{font-size:11px;color:#C3D3CC}
+
+  /* route diagram */
+  .route{display:flex;align-items:center;gap:0;margin-top:10px}
+  .route .stop{
+    display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;
+  }
+  .route .dot{
+    width:12px;height:12px;border-radius:50%;background:var(--brass-light);
+    box-shadow:0 0 0 4px rgba(216,174,110,.2);
+  }
+  .route .stop span{font-size:11px;color:#E4EAE5;font-weight:700}
+  .route .seg{flex:1 1 auto;height:1px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 6px,transparent 6px 12px);margin:0 4px 20px}
+
+  /* ---------- sections ---------- */
+  section.city{scroll-margin-top:64px;padding:0 0 10px}
+  .banner{
+    position:relative;padding:40px 18px 30px;color:#fff;overflow:hidden;
+  }
+  .banner .wrap{position:relative;z-index:2}
+  .banner h2{font-size:clamp(26px,7vw,34px);margin:0 0 6px}
+  .banner .tag{font-size:13px;opacity:.85;font-weight:500}
+
+  .banner.prague{background:linear-gradient(160deg,#2a4a6b 0%,#1c3550 60%,#12222f 100%)}
+  .banner.krakow{background:linear-gradient(160deg,var(--terracotta) 0%,var(--terracotta-2) 65%,#4a231a 100%)}
+  .banner.zakopane{background:linear-gradient(160deg,var(--mist) 0%,var(--mist-2) 60%,#233d42 100%)}
+  .banner.home{background:linear-gradient(160deg,#3d3325 0%,var(--forest-2) 70%)}
+
+  /* signature skyline shapes */
+  .skyline{position:absolute;bottom:0;right:0;left:0;height:70px;opacity:.9}
+  .skyline.prague-shape{
+    background:
+      linear-gradient(#0000 0 0) ,
+      repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 18px, transparent 18px 46px);
+    clip-path:polygon(0 100%,0 60%,4% 60%,4% 30%,8% 30%,8% 55%,14% 55%,14% 20%,17% 5%,20% 20%,20% 55%,30% 55%,30% 40%,34% 40%,34% 60%,44% 60%,44% 35%,47% 10%,50% 35%,50% 60%,60% 60%,60% 45%,64% 45%,64% 65%,74% 65%,74% 25%,77% 8%,80% 25%,80% 65%,90% 65%,90% 50%,94% 50%,94% 70%,100% 70%,100% 100%);
+    background-color:rgba(0,0,0,.35);
+  }
+  .skyline.krakow-shape{
+    background-color:rgba(0,0,0,.32);
+    clip-path:polygon(0 100%,0 70%,6% 70%,6% 40%,10% 20%,11% 40%,11% 15%,13% 5%,15% 15%,15% 40%,19% 40%,19% 70%,30% 70%,30% 55%,35% 55%,35% 70%,46% 70%,46% 30%,48% 12%,50% 30%,50% 70%,62% 70%,62% 50%,68% 50%,68% 70%,80% 70%,80% 45%,83% 45%,83% 25%,85% 12%,87% 25%,87% 45%,90% 45%,90% 70%,100% 70%,100% 100%);
+  }
+  .skyline.zakopane-shape{
+    background-color:rgba(0,0,0,.30);
+    clip-path:polygon(0 100%,0 75%,10% 40%,18% 65%,28% 20%,38% 60%,48% 10%,58% 55%,68% 30%,78% 62%,88% 25%,100% 68%,100% 100%);
+  }
+
+  .weather-row{
+    display:flex;gap:10px;margin:14px 0 0;flex-wrap:wrap;
+  }
+  .wchip{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:12px;padding:9px 14px;font-size:12px;flex:1;min-width:130px;
+  }
+  .wchip b{display:block;font-size:16px;font-family:'Amiri',serif;margin-bottom:2px}
+
+  .content-block{padding:22px 18px 6px}
+
+  /* day cards */
+  .day{
+    display:flex;gap:14px;
+    background:#fff;border:1px solid var(--line);
+    border-radius:16px;padding:16px;margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .day .datebadge{
+    flex:0 0 56px;text-align:center;
+  }
+  .day .datebadge .num{font-family:'Amiri',serif;font-size:26px;font-weight:700;line-height:1}
+  .day .datebadge .mon{font-size:10px;color:var(--mist-2);font-weight:700}
+  .day .body{flex:1}
+  .day .weekday{font-size:12px;color:var(--brass);font-weight:700;margin-bottom:2px}
+  .day h3{margin:0 0 8px;font-size:18px}
+  .day ul{margin:0;padding-inline-start:18px;font-size:14px;line-height:1.9}
+  .day ul li::marker{color:var(--brass)}
+  .badge-drive{
+    display:inline-flex;align-items:center;gap:5px;
+    background:var(--paper-dim);border:1px solid var(--line);
+    border-radius:100px;padding:3px 10px;font-size:11px;font-weight:700;
+    margin-bottom:8px;color:var(--forest-2)
+  }
+
+  /* callouts */
+  .callout{
+    border-radius:16px;padding:16px 18px;margin:16px 0;
+    background:#FBF3E1;border:1px solid #E7CE9C;
+  }
+  .callout.warn{background:#FBF3E1;border-color:#E7CE9C}
+  .callout b.ctitle{display:block;font-family:'Amiri',serif;font-size:16px;margin-bottom:6px;color:var(--terracotta-2)}
+  .callout p{margin:0;font-size:13.5px;line-height:1.9}
+
+  /* booking table */
+  .book-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:16px;margin-bottom:10px;box-shadow:var(--shadow);
+  }
+  .book-card h4{margin:0 0 8px;font-size:15px;font-family:'Amiri',serif}
+  .book-card .rowline{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-top:1px dashed var(--line)}
+  .book-card .rowline:first-of-type{border-top:none}
+  .book-card .fill{font-size:12.5px;color:var(--ink);padding:6px 0 0;margin-top:6px;border-top:1px dashed var(--line)}
+  .book-card .fill:first-of-type{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+  .book-card .fill b{font-weight:700}
+  .book-card .ph{color:#8b8272;font-style:italic}
+  .book-card .rowline span:first-child{color:var(--mist-2)}
+
+  /* tips list */
+  .tips{display:grid;gap:10px}
+  .tip{
+    display:flex;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:14px;box-shadow:var(--shadow);
+  }
+  .tip .ico{
+    flex:0 0 34px;height:34px;border-radius:50%;
+    background:var(--forest);color:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-size:15px;
+  }
+  .tip b{display:block;font-size:14px;margin-bottom:2px}
+  .tip p{margin:0;font-size:13px;color:#3a3f38;line-height:1.8}
+
+  h2.section-title{
+    font-size:22px;margin:34px 0 14px;padding:0 18px;
+  }
+  .section-title span.small{display:block;font-size:12px;font-family:'Tajawal';color:var(--mist-2);font-weight:500;margin-top:2px}
+
+  footer{
+    text-align:center;padding:40px 18px 50px;color:var(--mist-2);font-size:12px;
+  }
+  footer .sig{font-family:'Amiri',serif;font-size:15px;color:var(--forest);margin-bottom:6px}
+
+  @media (max-width:420px){
+    .stat-row{gap:8px}
+    .stat{min-width:90px;padding:10px 12px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner" id="navInner">
+    <button class="navpill" data-target="prague">🕍 براغ</button>
+    <button class="navpill" data-target="krakow">🏰 كراكوف</button>
+    <button class="navpill" data-target="zakopane">⛰️ زاكوباني</button>
+    <button class="navpill" data-target="home">🛫 العودة</button>
+    <button class="navpill" data-target="booking">📋 الحجوزات</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-content wrap">
+    <div class="eyebrow">رحلة جماعية بالسيارة</div>
+    <h1>رحلة الآباء<br>والأبناء</h1>
+    <p class="sub">10 أيام تجمع بين تاريخ وسط أوروبا، وميدان كراكوف الحي، وهدوء الجبال البولندية — من براغ إلى قمم التاترا وعودة.</p>
+
+    <div class="stat-row">
+      <div class="stat"><b>13–22</b><span>أغسطس 2026</span></div>
+      <div class="stat"><b>3</b><span>وجهات رئيسية</span></div>
+      <div class="stat"><b>4</b><span>مسافرين</span></div>
+      <div class="stat"><b>~13</b><span>ساعة قيادة إجمالاً</span></div>
+    </div>
+
+    <div class="route">
+      <div class="stop"><div class="dot"></div><span>براغ</span></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot"></div><span>كراكوف</span></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot"></div><span>زاكوباني</span></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot" style="background:#fff"></div><span>براغ</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= PRAGUE ======================= -->
+<section class="city" id="prague">
+  <div class="banner prague">
+    <div class="skyline prague-shape"></div>
+    <div class="wrap">
+      <h2>براغ 🇨🇿</h2>
+      <div class="tag">13 – 16 أغسطس · 3 ليالٍ · بدون سيارة</div>
+      <div class="weather-row">
+        <div class="wchip"><b>24° / 13°</b>أعلى / أدنى حرارة</div>
+        <div class="wchip"><b>~25%</b>احتمال مطر خفيف</div>
+        <div class="wchip"><b>الأنسب</b>طبقات خفيفة + جاكيت مسائي</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block wrap">
+    <div class="day">
+      <div class="datebadge"><div class="num">13</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الخميس</div>
+        <h3>الوصول إلى براغ</h3>
+        <ul>
+          <li>الوصول صباحًا، التوجه للفندق (تاكسي / أوبر)، وضع الحقائب</li>
+          <li>استكشاف ساحة المدينة القديمة (Old Town Square) والساعة الفلكية</li>
+          <li>راحة، ثم جولة مسائية في أزقة وسط البلد</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">14</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الجمعة</div>
+        <h3>جسر تشارلز وقلعة براغ</h3>
+        <ul>
+          <li>عبور جسر تشارلز (Charles Bridge) في الصباح الباكر قبل الزحمة</li>
+          <li>زيارة قلعة براغ (Prague Castle) والكاتدرائية، والاستمتاع بالإطلالة</li>
+          <li>مقاهي حي مالا سترانا (Mala Strana)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">15</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">السبت</div>
+        <h3>تلة ليتنا وميدان فاتسلاف</h3>
+        <ul>
+          <li>صعود تلة ليتنا (Letná Park) لمشاهدة غروب الشمس على جسور النهر</li>
+          <li>وقت حر للتسوق في ساحة فاتسلاف</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b class="ctitle">💡 ملاحظة عملية</b>
+      <p>هذي أيامكم الوحيدة بدون سيارة — استغلوها بالكامل للمشي داخل البلدة القديمة. السيارة تُستلم يوم الأحد صباحًا فقط.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= KRAKOW ======================= -->
+<section class="city" id="krakow">
+  <div class="banner krakow">
+    <div class="skyline krakow-shape"></div>
+    <div class="wrap">
+      <h2>كراكوف 🇵🇱</h2>
+      <div class="tag">16 – 18 أغسطس · ليلتان</div>
+      <div class="weather-row">
+        <div class="wchip"><b>25° / 13°</b>أعلى / أدنى حرارة</div>
+        <div class="wchip"><b>~19%</b>احتمال مطر (أجف نسبيًا)</div>
+        <div class="wchip"><b>الأنسب</b>ملابس صيفية + سترة خفيفة للمساء</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block wrap">
+    <div class="day">
+      <div class="datebadge"><div class="num">16</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الأحد</div>
+        <span class="badge-drive">🚗 يوم قيادة · ~5 ساعات</span>
+        <h3>الانتقال إلى كراكوف</h3>
+        <ul>
+          <li>الصباح: استلام السيارة المستأجرة من مكتب براغ</li>
+          <li>الظهر: الانطلاق بالسيارة نحو كراكوف (طريق سريع ومريح)</li>
+          <li>العصر: الوصول وتسجيل الدخول في الفندق</li>
+          <li>المساء: جولة في الساحة الرئيسية (Main Market Square) وعشاء</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">17</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الاثنين</div>
+        <h3>منجم الملح وحي كازيميرز</h3>
+        <ul>
+          <li>الصباح: منجم ملح فياليتشكا (Wieliczka) — 20 دقيقة عن كراكوف</li>
+          <li>بعد الظهر: حي كازيميرز (Kazimierz) الحيوي والمقاهي</li>
+          <li>المساء: مشي حول قلعة فافل المطلة على النهر</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b class="ctitle">🎟️ احجزوا مسبقًا</b>
+      <p>منجم فياليتشكا مزدحم جدًا في أغسطس، وتذاكر الجولات بالإنجليزية تنفد بسرعة. احجزوا التذاكر أونلاين قبل الوصول بأيام.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ZAKOPANE ======================= -->
+<section class="city" id="zakopane">
+  <div class="banner zakopane">
+    <div class="skyline zakopane-shape"></div>
+    <div class="wrap">
+      <h2>زاكوباني ⛰️</h2>
+      <div class="tag">18 – 21 أغسطس · 3 ليالٍ · جبال التاترا</div>
+      <div class="weather-row">
+        <div class="wchip"><b>21° / 10°</b>أعلى / أدنى حرارة</div>
+        <div class="wchip"><b>ليالٍ باردة</b>قد تصل 3-7° في الكوخ الجبلي</div>
+        <div class="wchip"><b>الأنسب</b>طبقات + جاكيت مقاوم للمطر + حذاء مشي</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block wrap">
+    <div class="day">
+      <div class="datebadge"><div class="num">18</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الثلاثاء</div>
+        <span class="badge-drive">🚗 يوم قيادة · ~ساعتين</span>
+        <h3>الانتقال إلى زاكوباني</h3>
+        <ul>
+          <li>الصباح: الخروج من كراكوف والتوجه بالسيارة إلى زاكوباني</li>
+          <li>الظهر: تسجيل الدخول، ثم النزول لشارع كروبوفكي (Krupówki) وتذوق الجبن المشوي (Oscypek)</li>
+          <li>العصر: ركوب القطار المائل لقمة Gubałówka لرؤية جبال التاترا</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">19</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الأربعاء</div>
+        <h3>بحيرة مورسكي أوكو</h3>
+        <ul>
+          <li>الصباح الباكر (قبل السادسة): القيادة لموقف Palenica Białczańska</li>
+          <li>مشاهدة بحيرة مورسكي أوكو (Morski Oko) الساحرة — نشاط اليوم الرئيسي</li>
+          <li>المساء: عشاء ريفي في كوخ تقليدي مع موسيقى حية</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">20</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الخميس</div>
+        <h3>الكوخ الجبلي والاسترخاء</h3>
+        <ul>
+          <li>الانتقال إلى الكوخ الجبلي المستقل</li>
+          <li>شواء (Barbecue) مع المجموعة، واستمتاع بالهدوء والطبيعة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b class="ctitle">🥾 مورسكي أوكو يحتاج وقتًا أطول</b>
+      <p>المسافة من الموقف للبحيرة ذهابًا وإيابًا تقريبًا 3-4 ساعات مشي (أو عربة حصان بمقابل). المواقف تمتلئ بسرعة صيفًا، فالوصول قبل الساعة 7 صباحًا ضروري.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RETURN ======================= -->
+<section class="city" id="home">
+  <div class="banner home">
+    <div class="wrap">
+      <h2>طريق العودة 🛫</h2>
+      <div class="tag">21 – 22 أغسطس</div>
+    </div>
+  </div>
+
+  <div class="content-block wrap">
+    <div class="day">
+      <div class="datebadge"><div class="num">21</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">الجمعة</div>
+        <span class="badge-drive">🚗 يوم قيادة · 6-7 ساعات</span>
+        <h3>الرجوع إلى براغ</h3>
+        <ul>
+          <li>تسجيل الخروج من الكوخ</li>
+          <li>الانطلاق بالسيارة من زاكوباني عودةً إلى براغ</li>
+          <li>المساء: الوصول لفندق قريب من مطار براغ، والمبيت استعدادًا للطيران الباكر</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="datebadge"><div class="num">22</div><div class="mon">أغسطس</div></div>
+      <div class="body">
+        <div class="weekday">السبت</div>
+        <h3>العودة للوطن</h3>
+        <ul>
+          <li>05:30 صباحًا: التوجه لمطار براغ وتسليم السيارة المستأجرة</li>
+          <li>08:35 صباحًا: الإقلاع بالسلامة إلى جدة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <b class="ctitle">⚠️ التوصية الأهم في الخطة كاملة</b>
+      <p>يوم 21/8 فيه ضغط حقيقي: تسجيل خروج ظهرًا + قيادة طويلة + نوم قصير قبل الاستيقاظ الساعة 4 صباحًا. حاولوا الانطلاق من زاكوباني الساعة 8-9 صباحًا بدل الظهر، لتصلوا براغ بوقت أبكر وتحصلوا على راحة فعلية قبل رحلة الطيران.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= BOOKINGS ======================= -->
+<h2 class="section-title" id="booking">📋 ملخص الحجوزات
+  <span class="small">جاهزة للنسخ عند الحجز</span>
+</h2>
+<div class="wrap">
+  <div class="book-card">
+    <h4>🏨 فندق براغ الأول</h4>
+    <div class="rowline"><span>دخول</span><span>الخميس 13 أغسطس</span></div>
+    <div class="rowline"><span>خروج</span><span>الأحد 16 أغسطس</span></div>
+    <!-- عدّل هنا: تفاصيل فندق براغ الأول -->
+    <div class="fill">🏨 <b>الاسم:</b> <span class="ph">[أدخل اسم الفندق]</span></div>
+    <div class="fill">📍 <b>العنوان:</b> <span class="ph">[أدخل العنوان أو رابط الخرائط]</span></div>
+    <div class="fill">📞 <b>رقم التواصل / تأكيد الحجز:</b> <span class="ph">[أدخل الرقم]</span></div>
+  </div>
+  <div class="book-card">
+    <h4>🚗 استئجار السيارة (براغ → براغ)</h4>
+    <div class="rowline"><span>استلام</span><span>الأحد 16 أغسطس، صباحًا</span></div>
+    <div class="rowline"><span>تسليم</span><span>السبت 22 أغسطس، ~5:30 صباحًا</span></div>
+    <!-- عدّل هنا: تفاصيل السيارة المستأجرة -->
+    <div class="fill">🏢 <b>شركة التأجير:</b> <span class="ph">[أدخل اسم الشركة]</span></div>
+    <div class="fill">🚙 <b>الفئة / الموديل:</b> <span class="ph">[أدخل نوع السيارة]</span></div>
+    <div class="fill">🔖 <b>رقم تأكيد الحجز:</b> <span class="ph">[أدخل الرقم]</span></div>
+  </div>
+  <div class="book-card">
+    <h4>🏨 فندق كراكوف</h4>
+    <div class="rowline"><span>دخول</span><span>الأحد 16 أغسطس</span></div>
+    <div class="rowline"><span>خروج</span><span>الثلاثاء 18 أغسطس</span></div>
+    <!-- عدّل هنا: تفاصيل فندق كراكوف -->
+    <div class="fill">🏨 <b>الاسم:</b> <span class="ph">[أدخل اسم الفندق]</span></div>
+    <div class="fill">📍 <b>العنوان:</b> <span class="ph">[أدخل العنوان أو رابط الخرائط]</span></div>
+    <div class="fill">📞 <b>رقم التواصل / تأكيد الحجز:</b> <span class="ph">[أدخل الرقم]</span></div>
+  </div>
+  <div class="book-card">
+    <h4>🏔️ فندق / كوخ زاكوباني</h4>
+    <div class="rowline"><span>دخول</span><span>الثلاثاء 18 أغسطس</span></div>
+    <div class="rowline"><span>خروج</span><span>الجمعة 21 أغسطس</span></div>
+    <!-- عدّل هنا: تفاصيل كوخ / فندق زاكوباني -->
+    <div class="fill">🏔️ <b>الاسم:</b> <span class="ph">[أدخل اسم الكوخ / الفندق]</span></div>
+    <div class="fill">📍 <b>العنوان:</b> <span class="ph">[أدخل العنوان أو رابط الخرائط]</span></div>
+    <div class="fill">📞 <b>رقم التواصل / تأكيد الحجز:</b> <span class="ph">[أدخل الرقم]</span></div>
+  </div>
+  <div class="book-card">
+    <h4>🏨 فندق مطار براغ</h4>
+    <div class="rowline"><span>دخول</span><span>الجمعة 21 أغسطس</span></div>
+    <div class="rowline"><span>خروج</span><span>السبت 22 أغسطس</span></div>
+    <!-- عدّل هنا: تفاصيل فندق مطار براغ -->
+    <div class="fill">🏨 <b>الاسم:</b> <span class="ph">[أدخل اسم الفندق]</span></div>
+    <div class="fill">📍 <b>العنوان / المسافة عن المطار:</b> <span class="ph">[أدخل التفاصيل]</span></div>
+    <div class="fill">📞 <b>رقم التواصل / تأكيد الحجز:</b> <span class="ph">[أدخل الرقم]</span></div>
+  </div>
+</div>
+
+<!-- ======================= CAR TIPS ======================= -->
+<h2 class="section-title">🚗 نصائح استئجار السيارة
+  <span class="small">لمجموعة من 4 أشخاص</span>
+</h2>
+<div class="wrap tips">
+  <div class="tip"><div class="ico">🚙</div><div><b>حجم السيارة</b><p>فئة SUV أو Station Wagon، لأن حقائب 4 أشخاص لن تكفيها سيارة سيدان صغيرة.</p></div></div>
+  <div class="tip"><div class="ico">🛂</div><div><b>العبور بين الحدود</b><p>أضيفوا خيار Cross Border Fee عند الحجز، لأنكم ستعبرون من تشيكيا إلى بولندا.</p></div></div>
+  <div class="tip"><div class="ico">🎫</div><div><b>ملصق الطرق (Vignette)</b><p>الطرق السريعة تتطلب رسومًا؛ تشيكيا غالبًا مزودة إلكترونيًا، وبولندا بعض طرقها تُدار حاليًا عبر نظام e-TOLL الإلكتروني بدل البوابات التقليدية — تأكدوا من طريقة الدفع المحدثة قبل السفر.</p></div></div>
+  <div class="tip"><div class="ico">🦺</div><div><b>عدة السلامة</b><p>صدرية عاكسة ومثلث تحذير إلزاميان قانونيًا في بولندا — تأكدوا أنهما ضمن السيارة.</p></div></div>
+  <div class="tip"><div class="ico">⛽</div><div><b>الوقود عند التسليم</b><p>عبّوا الخزان بالكامل قبل تسليم السيارة في المطار لتفادي رسوم إضافية.</p></div></div>
+</div>
+
+<footer>
+  <div class="sig">رحلة سعيدة 🌲</div>
+  شاركوا الرابط مع أفراد المجموعة — كل شيء يفتح مباشرة من الجوال
+</footer>
+
+<script>
+  const sections = ['prague','krakow','zakopane','home','booking'].map(id=>document.getElementById(id));
+  const pills = document.querySelectorAll('.navpill');
+
+  pills.forEach(p=>{
+    p.addEventListener('click',()=>{
+      const target = document.getElementById(p.dataset.target);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        pills.forEach(p=>p.classList.toggle('active', p.dataset.target === e.target.id));
+      }
+    });
+  }, {rootMargin:'-30% 0px -60% 0px'});
+
+  sections.forEach(s=> s && io.observe(s));
+</script>
+
+</body>
+</html>
